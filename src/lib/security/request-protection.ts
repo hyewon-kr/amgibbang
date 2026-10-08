@@ -57,7 +57,9 @@ export async function protectRequest(request: Request, body: unknown): Promise<(
         const snapshot = await transaction.get(clientRef);
         const current = snapshot.data();
         if (!current || current.lease !== lease) return;
-        transaction.update(clientRef, { activeUntil: 0, [route]: { ...current[route], activeUntil: 0, duplicateUntil: Date.now() + 15000 } });
+        // update() interprets keys as field paths and rejects route keys
+        // containing '/'. set() accepts these literal document field names.
+        transaction.set(clientRef, { activeUntil: 0, [route]: { ...current[route], activeUntil: 0, duplicateUntil: Date.now() + 15000 } }, { merge: true });
       });
     } catch { /* Lease expires after six minutes; never expose raw SDK errors. */ }
   };
