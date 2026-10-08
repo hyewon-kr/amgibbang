@@ -1,0 +1,23 @@
+# Firebase App Hosting — dynamic Next.js, not static export.
+runConfig:
+  cpu: 1
+  memoryMiB: 1024
+  minInstances: 0
+  maxInstances: 2
+  concurrency: 4
+env:
+  - variable: OPENAI_API_KEY
+    secret: openai-api-key
+    availability: [RUNTIME]
+  - variable: RATE_LIMIT_SALT
+    secret: rate-limit-salt
+    availability: [RUNTIME]
+  - variable: OPENAI_MODEL
+    value: gpt-6.1-sol
+    availability: [RUNTIME]
+  - variable: RATE_LIMIT_BACKEND
+    value: firestore
+    availability: [RUNTIME]
+  - variable: API_DAILY_REQUEST_LIMIT
+    value: "100"
+    availability: [RUNTIME]

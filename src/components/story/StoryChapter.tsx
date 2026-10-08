@@ -1,0 +1,5 @@
+import type { Chapter, StoryPayload } from "@/lib/schemas/story";
+import { StoryAnnotation } from "./StoryAnnotation";
+export function StoryChapter({ chapter, number, facts, openAnnotations, onToggle }: { chapter: Chapter; number: number; facts: StoryPayload["factAnchors"]; openAnnotations: string[]; onToggle: (id: string) => void; }) {
+  return <section className="novel-chapter" id={"chapter-" + chapter.id} aria-labelledby={"chapter-title-" + chapter.id}><header className="novel-chapter-header"><p className="chapter-label">CHAPTER {String(number).padStart(2, "0")}</p><h2 id={"chapter-title-" + chapter.id} tabIndex={-1}>{chapter.title}</h2></header>{chapter.story.split("\n\n").map((text, i) => { const id = "chapter-" + chapter.id + "-passage-" + i; const mappings = chapter.mappings.filter((m) => text.includes(m.storyExcerpt)); return <StoryAnnotation key={id} id={id} text={text} mappings={mappings} facts={facts} open={openAnnotations.includes(id)} onToggle={onToggle} chapterTitle={chapter.title} />; })}</section>;
+}

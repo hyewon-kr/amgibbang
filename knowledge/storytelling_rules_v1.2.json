@@ -1,0 +1,193 @@
+{
+  "version": "1.2",
+  "technique": "storytelling",
+  "product_direction": {
+    "output_medium": "interactive_web",
+    "active_methods": [
+      "storytelling",
+      "music"
+    ],
+    "illustration_generation": false
+  },
+  "scope": {
+    "primary_goal": [
+      "comprehension",
+      "engagement",
+      "retellability"
+    ],
+    "secondary_goal": [
+      "memory_support"
+    ]
+  },
+  "pipeline": [
+    "information_input_and_key_concept_extraction",
+    "user_confirmation_and_approval",
+    "genre_selection",
+    "story_generation",
+    "interactive_web_presentation"
+  ],
+  "narrative_engine": {
+    "principle": "세계관 명사 치환보다 욕망→관계→갈등→Narrative Driving Question→Payoff를 먼저 설계한다.",
+    "required": [
+      "protagonist_desire",
+      "motivation",
+      "relationship_arc",
+      "conflict_progression",
+      "narrative_driving_question",
+      "payoff"
+    ],
+    "motivation_rule": "주인공이 왜 목표를 반드시 달성하고 싶은지 초반에 납득 가능하게 제시한다. Narrative Flavor와 Fact는 구분한다.",
+    "relationship_continuity": "조력자·동료·라이벌의 기능 수행과 퇴장을 단순 처리하지 않고 이후 사건에 감정적 의미가 남게 한다."
+  },
+  "genres": {
+    "romance_fantasy": {
+      "driving_question": "주인공은 한계를 극복하고 목표한 신분·장소·인정을 얻을 수 있는가?",
+      "core_fun": [
+        "욕망",
+        "신분",
+        "관계",
+        "구원",
+        "각성",
+        "인정"
+      ],
+      "relationships": [
+        "헌신적 조력자",
+        "구원",
+        "이별",
+        "라이벌",
+        "로맨틱 텐션"
+      ],
+      "conflicts": [
+        "관문",
+        "신분 조건",
+        "저주",
+        "마법적 제약",
+        "희생"
+      ],
+      "payoff": [
+        "입궁",
+        "각성",
+        "인정",
+        "구원"
+      ]
+    },
+    "zombie_apocalypse": {
+      "driving_question": "다음 위험구역을 살아서 통과하고 안전지대에 도달할 수 있는가?",
+      "core_fun": [
+        "생존",
+        "긴박감",
+        "위험구역 진행",
+        "동료애",
+        "희생"
+      ],
+      "relationships": [
+        "전우애",
+        "희생",
+        "불신→신뢰",
+        "구조대 인계"
+      ],
+      "conflicts": [
+        "오염구역",
+        "방역벽",
+        "제한조건",
+        "시간압박"
+      ],
+      "safety": "non-gory"
+    },
+    "modern_web_fiction": {
+      "core_fun": [
+        "캐릭터 케미",
+        "빠른 대사",
+        "경쟁 또는 미스터리",
+        "인정"
+      ],
+      "subgenres": {
+        "idol": {
+          "driving_question": "다음 라운드를 통과하고 최종 데뷔할 수 있는가?",
+          "engine": [
+            "데뷔 욕망",
+            "평가",
+            "프로듀서",
+            "위기",
+            "재편",
+            "최종평가",
+            "데뷔"
+          ]
+        },
+        "mystery": {
+          "driving_question": "무슨 일이 일어났으며 단서를 어떻게 하나의 과정으로 재구성할 수 있는가?",
+          "engine": [
+            "Question",
+            "Evidence",
+            "Suspect",
+            "Contradiction",
+            "New Evidence",
+            "Reconstruction",
+            "Reveal"
+          ]
+        }
+      }
+    },
+    "fantasy_academy": {
+      "driving_question": "시험·퀘스트를 어떤 지식과 능력으로 해결할 수 있는가?",
+      "core_fun": [
+        "성장",
+        "수업",
+        "시험",
+        "퀘스트",
+        "규칙 발견",
+        "숙련"
+      ],
+      "relationships": [
+        "교수-학생",
+        "스승-제자",
+        "라이벌",
+        "파티"
+      ],
+      "conflicts": [
+        "단계별 시험",
+        "금지구역",
+        "마법 제약",
+        "기존 능력의 한계"
+      ],
+      "rule": "라이벌을 강제하지 않는다. 수업·시험 자체가 narrative engine이 될 수 있다."
+    }
+  },
+  "quality_gate": {
+    "priority": [
+      "factual_fidelity",
+      "relational_relevance",
+      "comprehensibility",
+      "narrative_coherence",
+      "engagement",
+      "retellability",
+      "economy"
+    ],
+    "compression_required": false,
+    "hard_reject": [
+      "필수 인과/단계 순서 왜곡",
+      "단순 명사 치환만 존재",
+      "주인공 목표의 동기가 납득되지 않음",
+      "fictional mapping이 원정보보다 더 큰 학습 부담을 만듦"
+    ]
+  },
+  "interactive_web": {
+    "components": [
+      "genre_selector",
+      "scene_or_chapter_navigation",
+      "fact_anchor_toggle",
+      "metaphor_to_fact_mapping",
+      "short_flow_summary",
+      "key_concept_confirmation"
+    ],
+    "principle": "장르 서사와 Fact Anchor를 분리하되 사용자가 언제든 대응시켜 볼 수 있게 한다."
+  },
+  "example_file": "example.md",
+  "output_structure": [
+    "title",
+    "story",
+    "fact_anchors_and_mapping",
+    "short_flow_summary",
+    "interactive_web_payload"
+  ]
+}

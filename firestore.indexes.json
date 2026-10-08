@@ -1,0 +1,1 @@
+{"indexes":[],"fieldOverrides":[{"collectionGroup":"amgippangApiLimits","fieldPath":"expiresAt","ttl":true,"indexes":[]}]}
