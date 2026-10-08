@@ -9,6 +9,12 @@ export function validRequestOrigin(request: Request) {
   if (!origin) return true;
   try {
     const source = new URL(origin);
+    // App Hosting forwards requests to a Cloud Run host. Compare browser
+    // origins against the configured public URL rather than that internal host.
+    if (process.env.NODE_ENV === "production" && process.env.APP_ORIGIN) {
+      const publicUrl = new URL(process.env.APP_ORIGIN);
+      return publicUrl.protocol === "https:" && source.origin === publicUrl.origin;
+    }
     const target = new URL(request.url);
     // Next.js may reconstruct request.url with localhost even when the incoming
     // Host and browser Origin are 127.0.0.1. Host is the actual HTTP destination.

@@ -2,9 +2,27 @@ import OpenAI from "openai";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { AnalyzeRequest, StoryRequest } from "../src/lib/generation/api-contract";
-import { handleGeneration } from "../src/lib/generation/api-handler";
+import { handleGeneration, validRequestOrigin } from "../src/lib/generation/api-handler";
 import { GenerationError } from "../src/lib/generation/openai-provider";
 import { mockAnalysis } from "../src/lib/mock/carbohydrate";
+
+test("App Hosting public Origin is allowed behind an internal Cloud Run Host", () => {
+  const previous = { NODE_ENV: process.env.NODE_ENV, APP_ORIGIN: process.env.APP_ORIGIN };
+  Object.assign(process.env, { NODE_ENV: "production", APP_ORIGIN: "https://app.example" });
+  try {
+    const request = (origin: string) => new Request("http://localhost:8080/api/analyze", {
+      headers: { host: "internal.a.run.app", origin, "x-forwarded-proto": "https" },
+    });
+    assert.equal(validRequestOrigin(request("https://app.example")), true);
+    assert.equal(validRequestOrigin(request("https://evil.example")), false);
+    assert.equal(validRequestOrigin(request("https://app.example.evil.test")), false);
+    assert.equal(validRequestOrigin(request("http://app.example")), false);
+  } finally {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value;
+    }
+  }
+});
 
 test("API validates requests before invoking generation", async () => {
   let invoked = false;
