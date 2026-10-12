@@ -41,7 +41,7 @@ export async function protectRequest(request: Request, body: unknown): Promise<R
   // App Hosting / shared study Wi-Fi can present the same proxy IP. A stable
   // browser session separates participants; the shared daily cost cap remains.
   const clientId = request.headers.get("x-client-id");
-  const requestId = request.headers.get("x-request-id") || undefined;
+  const requestId = request.headers.get("x-amgippang-request-id") || undefined;
   const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
   if ((clientId && !uuid.test(clientId)) || (requestId && !uuid.test(requestId))) throw new ProtectionError("요청 식별 정보를 확인해주세요.", 400);
   const clientRef = database.collection("amgippangApiLimits").doc(hash(clientId ? "session:" + clientId : "legacy:" + ip));

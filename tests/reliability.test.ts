@@ -12,7 +12,7 @@ test("network retry and pending poll keep request identity; failures preserve ma
   try {
     globalThis.fetch = async (_url, options) => {
       const headers = new Headers(options?.headers);
-      ids.push(headers.get("X-Request-Id")!);
+      ids.push(headers.get("X-Amgippang-Request-Id")!);
       assert.ok(headers.get("X-Client-Id"));
       calls++;
       if (calls === 1) throw new TypeError("network disconnected");
@@ -23,13 +23,13 @@ test("network retry and pending poll keep request identity; failures preserve ma
     assert.equal(calls, 3);
     assert.equal(new Set(ids).size, 1);
     globalThis.fetch = async (_url, options) => {
-      ids.push(new Headers(options?.headers).get("X-Request-Id")!);
+      ids.push(new Headers(options?.headers).get("X-Amgippang-Request-Id")!);
       return Response.json({ error: "format error", code: "zod_validation" }, { status: 502 });
     };
     await assert.rejects(post("/api/story", { test: "manual" }), /실패한 단계/);
     const failedId = ids.at(-1);
     globalThis.fetch = async (_url, options) => {
-      assert.equal(new Headers(options?.headers).get("X-Request-Id"), failedId);
+      assert.equal(new Headers(options?.headers).get("X-Amgippang-Request-Id"), failedId);
       return Response.json({ title: "recovered" });
     };
     assert.deepEqual(await post("/api/story", { test: "manual" }), { title: "recovered" });

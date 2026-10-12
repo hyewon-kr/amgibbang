@@ -33,7 +33,7 @@ export async function post<T = unknown>(url: string, body: unknown): Promise<T> 
     let response: Response;
     try {
       response = await fetch(url, {
-        method: "POST", headers: { "Content-Type": "application/json", "X-Client-Id": browserId(), "X-Request-Id": id },
+        method: "POST", headers: { "Content-Type": "application/json", "X-Client-Id": browserId(), "X-Amgippang-Request-Id": id },
         body: encoded, signal: AbortSignal.timeout(Math.min(165000, Math.max(1, deadline - Date.now()))),
       });
     } catch {

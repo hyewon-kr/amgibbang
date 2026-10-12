@@ -16,7 +16,7 @@ env:
     secret: rate-limit-salt
     availability: [RUNTIME]
   - variable: OPENAI_MODEL
-    value: gpt-6.1-sol
+    value: gpt-6-luna
     availability: [RUNTIME]
   - variable: RATE_LIMIT_BACKEND
     value: firestore
