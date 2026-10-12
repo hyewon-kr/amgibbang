@@ -17,6 +17,7 @@ export function LearningFlow() {
   const [state, dispatch] = useReducer(flowReducer, initialState);
   const [busy, setBusy] = useState<"analysis" | "story" | null>(null);
   const [error, setError] = useState("");
+  const [elapsed, setElapsed] = useState(0);
   const mainRef = useRef<HTMLElement>(null);
   const previousScreen = useRef("");
   const analysisRef = useRef(false);
@@ -48,22 +49,30 @@ export function LearningFlow() {
     analysisRef.current = !!state.analysis;
   }, [state.analysis, state.screen]);
 
+  useEffect(() => {
+    if (!busy) return;
+    const started = Date.now();
+    const timer = setInterval(() => setElapsed(Math.floor((Date.now() - started) / 1000)), 1000);
+    return () => clearInterval(timer);
+  }, [busy]);
+  useEffect(() => () => { operation.current++; }, []);
+
   async function analyze() {
     if (locked.current || !state.originalContent.trim()) return;
     locked.current = true;
     const id = ++operation.current;
-    setBusy("analysis"); setError("");
+    setElapsed(0); setBusy("analysis"); setError("");
     try {
       const analysis = validateAnalysis(await apiProvider.analyze(state.originalContent));
       if (id === operation.current) dispatch({ type: "ANALYZED", analysis });
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "분석하지 못했어요. 다시 시도해주세요."); }
+    } catch (cause) { if (id === operation.current) setError(cause instanceof Error ? cause.message : "분석하지 못했어요. 다시 시도해주세요."); }
     finally { if (id === operation.current) { locked.current = false; setBusy(null); } }
   }
   async function generate() {
     if (locked.current || !state.analysis || !state.genre) return;
     locked.current = true;
     const id = ++operation.current;
-    setBusy("story"); setError("");
+    setElapsed(0); setBusy("story"); setError("");
     try {
       const story = validateStory(await apiProvider.createStory({
         originalContent: state.originalContent, analysis: state.analysis,
@@ -71,7 +80,7 @@ export function LearningFlow() {
         genre: state.genre,
       }));
       if (id === operation.current) dispatch({ type: "STORY", story });
-    } catch (cause) { setError(cause instanceof Error ? cause.message : "이야기를 열지 못했어요."); }
+    } catch (cause) { if (id === operation.current) setError(cause instanceof Error ? cause.message : "이야기를 열지 못했어요."); }
     finally { if (id === operation.current) { locked.current = false; setBusy(null); } }
   }
   function reset() {
@@ -85,8 +94,9 @@ export function LearningFlow() {
     <main id="main" ref={mainRef} tabIndex={-1} aria-label={state.screen === "setup" ? "Story Setup" : "Story Reader"}>
       {!state.ready ? <p className="loading-note" role="status">이야기의 문을 열고 있어요…</p> : <>
         {error && <div className="global-error" role="alert">{error}<button className="text-button" onClick={() => setError("")}>닫기</button></div>}
-        {state.screen === "setup" && <div className="story-setup"><LearningInput value={state.originalContent} onChange={(value) => { setError(""); dispatch({ type: "INPUT", value }); }} onAnalyze={analyze} busy={busy !== null} analyzed={!!state.analysis} />
-          {state.analysis && <div className="setup-expansion"><AnalysisSummary analysis={state.analysis} /><AdditionalRequests userPriority={state.userPriority} comprehensionNeeds={state.comprehensionNeeds} onChange={(field, value) => dispatch({ type: "REQUEST", field, value })} disabled={busy !== null} /><GenreSelector selected={state.genre} onSelect={(genre) => dispatch({ type: "GENRE", genre })} disabled={busy !== null} /><GenerateStoryCTA selected={!!state.genre} busy={busy === "story"} onGenerate={generate} /></div>}
+        {busy && <p className="prototype-note" role="status" aria-live="polite">{busy === "analysis" ? "학습 내용을 분석하고 있어요." : "선택한 장르로 이야기를 만들고 있어요."} {elapsed}초 경과{elapsed >= 45 ? " · 요청이 진행 중입니다. 다시 누르지 않아도 돼요." : ""}</p>}
+        {state.screen === "setup" && <div className="story-setup"><LearningInput value={state.originalContent} onChange={(value) => { setError(""); dispatch({ type: "INPUT", value }); }} onAnalyze={analyze} busy={busy !== null} analyzing={busy === "analysis"} analyzed={!!state.analysis} />
+          {state.analysis && <div className="setup-expansion"><AnalysisSummary analysis={state.analysis} /><AdditionalRequests userPriority={state.userPriority} comprehensionNeeds={state.comprehensionNeeds} onChange={(field, value) => dispatch({ type: "REQUEST", field, value })} disabled={busy !== null} /><GenreSelector selected={state.genre} onSelect={(genre) => dispatch({ type: "GENRE", genre })} disabled={busy !== null} /><GenerateStoryCTA selected={!!state.genre} busy={busy === "story"} pending={busy !== null} onGenerate={generate} /></div>}
         </div>}
         {state.screen === "reader" && state.story && <StoryReader story={state.story} originalContent={state.originalContent} hasRequests={!!(state.userPriority.trim() || state.comprehensionNeeds.trim())} openAnnotations={state.openAnnotations} onToggle={(id) => dispatch({ type: "ANNOTATION", id })} onSetup={backToSetup} onRestart={reset} />}
       </>}

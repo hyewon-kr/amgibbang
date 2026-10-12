@@ -1,5 +1,8 @@
 export function diagnostic(data: Record<string, unknown>) {
-  if (process.env.NODE_ENV === "production") return;
+  if (process.env.NODE_ENV === "production") {
+    const allowed = new Set(["category", "route", "status", "model", "responseStatus", "requestId", "durationMs", "inputTokens", "outputTokens", "reasoningTokens", "cachedTokens", "upstreamStatus", "type", "code", "attempt", "cacheHit"]);
+    data = Object.fromEntries(Object.entries(data).filter(([key]) => allowed.has(key)));
+  }
   console.info("[generation]", JSON.stringify(data));
 }
 // API errors can echo a credential or user text. Preserve useful configuration

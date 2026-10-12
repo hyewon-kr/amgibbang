@@ -3,7 +3,11 @@ import path from "node:path";
 import type { StoryGenre } from "../schemas/story";
 
 // Preserve v1.2 source files. Normalize only their genre hierarchy at the boundary.
-export async function loadKnowledge() {
+let cachedKnowledge: ReturnType<typeof readKnowledge> | undefined;
+export function loadKnowledge() {
+  return cachedKnowledge ||= readKnowledge().catch((error) => { cachedKnowledge = undefined; throw error; });
+}
+async function readKnowledge() {
   const root = path.join(process.cwd(), "knowledge");
   const [json, guidance, examples, overrideJson, goldenExamples] = await Promise.all([
     readFile(path.join(root, "storytelling_rules_v1.2.json"), "utf8"),

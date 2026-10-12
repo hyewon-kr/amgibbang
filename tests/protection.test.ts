@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { boundedText, protectRequest, ProtectionError, reserve } from "../src/lib/security/request-protection";
+import { boundedText, protectRequest, ProtectionError, reserve, replayBucket } from "../src/lib/security/request-protection";
 test("limits, in-flight leases and duplicate cooldown are enforced", () => {
   const now = 1000000;
   const first = reserve({}, now, 3, "digest", "owner");
@@ -27,4 +27,14 @@ test("production protection fails closed when configuration is absent", async ()
       if (value === undefined) delete process.env[key!]; else process.env[key!] = value;
     }
   }
+});
+
+test("replay requires matching content and request identity; analysis can reuse facts", () => {
+  const bucket = { digest: "body", requestId: "owner", result: JSON.stringify({ title: "real result" }), resultUntil: 2000 };
+  assert.deepEqual(replayBucket(bucket, "body", "owner", false, 1000), { title: "real result" });
+  assert.equal(replayBucket(bucket, "changed", "owner", false, 1000), undefined);
+  assert.equal(replayBucket(bucket, "body", "new", false, 1000), undefined);
+  assert.deepEqual(replayBucket(bucket, "body", "new", true, 1000), { title: "real result" });
+  assert.equal(replayBucket(bucket, "body", "owner", false, 2001), undefined);
+  assert.equal(replayBucket({ ...bucket, result: undefined }, "body", "owner", false, 1000), undefined);
 });
