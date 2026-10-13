@@ -56,6 +56,7 @@ test("crime mystery uses a recurring investigative cast and independent case evi
   const story = validateStory(mockStories.mystery);
   const text = story.chapters.map((chapter) => chapter.story).join("\n");
   assert.match(text, /기금.*사라졌다/);
+  assert.match(text, /연구소장이 살해된/);
   assert.equal(story.narrativePlan.relationshipArc.length, 3);
   for (const character of story.narrativePlan.relationshipArc) {
     assert.ok(story.chapters.filter((chapter) => chapter.story.includes(character.character.split(" ")[0])).length >= 2);
