@@ -11,6 +11,7 @@ import { GenreSelector } from "../src/components/learning/GenreSelector";
 import { StoryRequest } from "../src/lib/generation/api-contract";
 import { readSession } from "../src/features/learning-flow/session";
 import { mockStories } from "../src/lib/mock/stories";
+import { loadKnowledge } from "../src/lib/generation/knowledge-provider";
 
 const suggestion = { recommendedGenre: "mystery" as const, recommendationReason: "저해 방식의 차이를 사건의 단서로 활용하기 좋아요." };
 const analysis = validateAnalysis({ ...mockAnalysis, ...suggestion });
@@ -24,10 +25,14 @@ test("analysis returns a single recommendation in its existing one OpenAI reques
     calls++;
     const request = JSON.parse(String(init?.body));
     if (request.text.format.name === "learning_story") {
+      const { references } = await loadKnowledge();
+      for (const reference of references.examples.filter((r) => r.genre === "idol_entertainment")) assert.ok(request.instructions.includes(reference.originalText));
       const input = JSON.parse(request.input);
       assert.equal(input.genre, "idol_entertainment");
       assert.ok(!("recommendedGenre" in input.analysis));
       assert.ok(!("recommendationReason" in input.analysis));
+      assert.ok(!("userFacing" in input.analysis));
+      assert.deepEqual(input.analysis.internal, mockAnalysis.internal);
       const plan = mockStories.idol_entertainment.narrativePlan;
       const model = { title: "Selected genre", drivingQuestion: "선택한 장르의 이야기", narrativePlan: { protagonistDesire: plan.protagonistDesire, motivation: plan.motivation, relationshipArc: plan.relationshipArc, payoff: plan.payoff }, chapters: [{ title: "Test scene", conflict: "", resolution: "", stepNumbers: [1], paragraphs: mockAnalysis.internal.factAnchors.map((fact, index) => ({ text: fact.text, annotation: { factNumbers: [index + 1], explanation: "테스트 연결", metaphorLimit: null } })) }] };
       return Response.json({ id: "resp_story_test", object: "response", status: "completed", model: "test-model", output: [{ id: "msg_story_test", type: "message", role: "assistant", status: "completed", content: [{ type: "output_text", text: JSON.stringify(model), annotations: [] }] }] });

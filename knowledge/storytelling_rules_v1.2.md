@@ -1,6 +1,6 @@
 # trytry Storytelling — current rules
 
-`storytelling_rules_v1.2.json` is the single active generation rule source, revision `trytry-2026-10-13`. The public StoryPayload `rulesVersion: "1.2"` is retained for compatibility. This Markdown explains the architecture; it is not appended to model prompts.
+`storytelling_rules_v1.2.json` is the single active generation rule source, revision `trytry-2026-10-13-full-originals`. The public StoryPayload `rulesVersion: "1.2"` is retained for compatibility. This Markdown explains the architecture; it is not appended to model prompts.
 
 Concept as Character → Function as Action → Concept-Driven Plot. When personification fits, original learning terms identify characters before invented personal names. Functions determine actions, constraints, relationships and consequences. Evidence, objects and magical rules remain valid alternatives; not every concept requires a character.
 
@@ -12,10 +12,10 @@ Five peer genres retain existing API IDs: Romance Fantasy, Zombie Apocalypse, Id
 
 - `trytry_codex_prompt.txt`: unchanged supplied implementation requirements.
 - `trytry_golden_examples.txt`: unchanged supplied excerpts, outlines and summaries, **not full originals**.
-- `trytry_golden_index.json`: typed editorial summaries, provenance, accepted/candidate status, source-backed excerpts and analogy limits. Five accepted entries (including two idol examples); one Fantasy Academy candidate.
+- `trytry_golden_index.json`: full-original file paths, hashes and accepted/candidate status. The new supplied RTF and its UTF-8 originals are preserved under `golden-originals/`. Five accepted entries and one Academy candidate; all six have supplied full text.
 - `golden_examples.md`, `example.md`, `genre_structure_override.json`: historical references, excluded from current generation context. Their full manuscript status does not change the provenance of the new supplied collection.
 
-The loader reads and validates the current JSON rules/index once per server process. The prompt includes common rules once, only the selected genre and at most two brief same-genre references. Full examples and implementation instructions are not sent per request. No new LLM calls, model changes, API fields, storage or deployment configuration changes are introduced.
+The loader reads and validates the current JSON rules/index once per server process. The prompt includes common rules once, only the selected genre and its full originals; idol includes both works. No summaries or truncation replace originals. Implementation instructions are not sent per request. No new LLM calls, model changes, API fields, storage or deployment configuration changes are introduced.
 
 ## Verification
 

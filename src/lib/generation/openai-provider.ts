@@ -38,6 +38,8 @@ export const openaiProvider: LearningProvider = {
   async createStory(setup) {
     const analysis = validateAnalysis(setup.analysis);
     const NarrativeSchema = narrativeModelSchema(analysis);
+    const instructions = await storyInstructions(setup);
+    diagnostic({ category: "story_context", model: generationModel(), code: "golden-full-originals", promptCharacters: instructions.length });
     let feedback = "";
     const deadline = Date.now() + 265000;
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -45,8 +47,8 @@ export const openaiProvider: LearningProvider = {
     const started = Date.now();
     const response = await client().responses.parse({
       model: generationModel(), store: false, reasoning: { effort: generationEffort() },
-      instructions: await storyInstructions(setup),
-      input: JSON.stringify({ ...setup, analysis: { userFacing: analysis.userFacing, internal: analysis.internal }, repairFeedback: feedback }), text: { format: zodTextFormat(NarrativeSchema, "learning_story") }, max_output_tokens: 12000,
+      instructions,
+      input: JSON.stringify({ ...setup, analysis: { internal: analysis.internal }, repairFeedback: feedback }), text: { format: zodTextFormat(NarrativeSchema, "learning_story") }, max_output_tokens: 12000,
     }, { signal: AbortSignal.timeout(Math.max(1, Math.min(150000, deadline - Date.now()))) });
     checkResponse(response, started);
     if (!response.output_parsed) throw new GenerationError("이야기 결과를 받지 못했어요. 다시 시도해주세요.");
