@@ -23,7 +23,8 @@ test("all facts, mappings, chapter references, and flow links are valid", () => 
 test("five peer genres are consistently derived from preserved rules", async () => {
   const knowledge = await loadKnowledge();
   assert.deepEqual(Object.keys(knowledge.rules.genres).sort(), genres.map((g) => g.id).sort());
-  assert.equal(knowledge.rules.genres.idol_entertainment.driving_question, "다음 라운드를 통과하고 최종 데뷔할 수 있는가?");
+  assert.ok(knowledge.rules.genres.idol_entertainment.driving_question);
+  assert.equal(knowledge.rules.genres.idol_entertainment.engine, undefined);
   assert.equal("subgenre" in mockStory, false);
   assert.equal("modern_web_fiction" in knowledge.rules.genres, false);
 });

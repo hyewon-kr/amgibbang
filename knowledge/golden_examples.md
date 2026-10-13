@@ -46,9 +46,9 @@
 ### 1. Source already contains the plot
 
 Fiction을 만들기 전에 묻는다: "Does the learning content already contain a story?"
-입력에서 누가 반응하는지, 무엇이 변하는지, 무엇 때문에 변하는지, 어떤 문제가 발생하는지, 어떤 작용이 이어지는지, 무엇이 해결되는지를 찾는다. 반응자·변환·trigger·constraint·작용·결과를 먼저 구성한다. 충분한 구조가 있다면 그 causal structure 자체를 plot으로 쓰고 새 plot은 거의 만들지 않는다.
+입력에서 누가 반응하는지, 무엇이 변하는지, 무엇 때문에 변하는지, 어떤 문제가 발생하는지, 어떤 작용이 이어지는지, 무엇이 해결되는지를 찾는다. 반응자·변환·trigger·constraint·작용·결과를 먼저 구성한다. 충분한 구조가 있다면 그 causal structure 자체를 plot으로 쓰고 그 구조를 사건의 뼈대로 삼고 인물의 선택·대사·장르 갈등을 자연스럽게 연결한다.
 
-생성 순서: SOURCE STRUCTURE → GENRE REFRAMING → LIGHT NARRATIVE.
+생성 순서: SOURCE STRUCTURE → GENRE REFRAMING → PLAYFUL NARRATIVE.
 Fiction should fill narrative gaps, not replace the source structure.
 
 ### 2. Fictional causality mirrors factual causality
@@ -57,13 +57,11 @@ Fiction should fill narrative gaps, not replace the source structure.
 
 예시의 황궁·봉인·명령은 비유다. ACE의 실제 위치, 효소 작용, Ang II 작용 등을 fictional geography나 인물의 의지로 설명하지 않는다. 이야기에서 두 작용을 차례로 소개했다고 실제로 혈관수축이 먼저 끝나거나 실패해야 알도스테론 작용이 시작된다는 조건을 추가하지 않는다. 이런 비유의 한계는 annotation에서 분명히 한다.
 
-### 3. Almost no filler
+### 3. Source-grounded creative freedom
+사건의 기전·선택·결과는 학습 구조에 연결한다. 인물의 케미, 오해, 유머, 세계관, 로맨스·정치·악역도 그 사건에 의미 있게 관여하면 허용한다. 개념과 무관한 독립 장편 subplot이나 장황한 설정으로 중심을 잃지 않는다. 불필요한 filler를 줄이는 것은 인물·재미·장르를 없애라는 뜻이 아니다.
 
-대부분의 사건은 실제 concept 또는 causal transition에 직접 대응해야 한다. 어린 시절, 황실 정치, 무관한 로맨스·악역·사건·풍경·설정은 넣지 않는다. 문단을 지웠을 때 개념 이해·관계 연결·기억에 손해가 없다면 삭제하거나 축약한다. 조력자 관계도 학습 구조를 설명하는 데 필요한 정도만 사용한다.
-
-### 4. Genre is lightweight
-
-공작가·황실·전령·봉인·명령은 source의 역할을 재표현하는 가벼운 wrapper이다. 정통 장르소설의 완성도를 목표로 삼지 않는다. 다른 선택 장르도 자기 장르 문법으로 같은 source 구조를 표현하며, 황궁·제국 수압 등의 설정을 복제하지 않는다.
+### 4. Genre makes mechanisms entertaining
+예시의 공작가·전령·봉인은 원정보의 관계를 기발하게 재표현한다. 가벼운 어휘 포장에 그치지 않고 선택 장르의 실제 사건과 인물 행동으로 발전시킨다. 예시의 목적지·문장·캐릭터를 복제하지 않는다. 의미 있는 로맨스, 실제 좀비, 업계 활동, 살인 수사, 마법 등 선택 장르의 정체성을 갖추되 정해진 장르 플롯을 강제하지 않는다.
 
 ### 5. Original terminology remains visible
 
