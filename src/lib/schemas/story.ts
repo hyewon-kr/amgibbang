@@ -5,7 +5,7 @@ export const StoryGenreSchema = z.enum([
   "zombie_apocalypse",
   "idol_entertainment",
   "mystery",
-  "fantasy_academy",
+  "fantasy_academy", // Compatibility ID for the displayed Fantasy genre.
 ]);
 export type StoryGenre = z.infer<typeof StoryGenreSchema>;
 

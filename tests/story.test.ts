@@ -78,3 +78,16 @@ test("every mapping attaches to a real paragraph; at most one trigger per passag
     assert.ok(triggers <= 2);
   }
 });
+
+// Old IDs/session payloads must continue to resolve to the new displayed genre.
+test("Fantasy retains its compatible ID and adventure rules without exam defaults", async () => {
+  const knowledge = await loadKnowledge();
+  const fantasy = genres.find((genre) => genre.id === "fantasy_academy")!;
+  assert.equal(fantasy.name, "판타지");
+  assert.equal(knowledge.rules.genres.fantasy_academy.display_name, "판타지");
+  assert.ok(knowledge.rules.genres.fantasy_academy.core_fun.includes("모험"));
+  const story = validateStory(mockStories.fantasy_academy);
+  assert.equal(story.genre, fantasy.id);
+  assert.match(story.narrativePlan.protagonistDesire, /등대/);
+  assert.doesNotMatch(story.chapters.map((chapter) => chapter.story).join("\n"), /교수|수업|시험|합격/);
+});

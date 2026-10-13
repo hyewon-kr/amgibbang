@@ -45,7 +45,7 @@ Previous/Next, Chapter pagination, Chapter X/Total, Chapter progress, 별도 Com
 ## 주석
 
 - mapping이 존재하는 문단에만 별표를 배치합니다. 같은 문단의 mappings는 하나의 trigger로 묶습니다.
-- 주석 trigger 수: 로맨스판타지 5 / 좀비 아포칼립스 5 / 아이돌·연예계 5 / 추리 6 / 판타지 아카데미 5. 같은 문단의 복수 매핑을 하나의 trigger로 묶습니다.
+- 주석 trigger 수: 로맨스판타지 5 / 좀비 아포칼립스 5 / 아이돌·연예계 5 / 추리 6 / 판타지 5. 같은 문단의 복수 매핑을 하나의 trigger로 묶습니다.
 - 기본은 모두 닫힘입니다. 클릭·탭·키보드 Enter/Space로 독립적으로 열고 다시 닫습니다.
 - 데스크톱의 넓은 화면에서는 margin note, 1150px 이하에서는 해당 문단 바로 아래에 표시합니다.
 - Story text를 대체하거나 숨기지 않습니다.
@@ -90,6 +90,8 @@ useReducer는 screen: setup | reader, originalContent, analysis, userPriority, c
 src/lib/mock/carbohydrate.ts에는 공통 user-facing summary와 internal 분석이 있습니다. src/lib/mock/backbone.ts의 동일한 Fact Anchor와 Steps를 다섯 Story가 공유합니다. 각 Story는 src/lib/mock/stories/ 아래 독립 파일로 관리합니다. 사용자 요청에 따라 원본 설정을 장면·대화·관계 중심으로 확장했습니다. 공통 Fact와 Steps는 변경하지 않았으며 스키마·참조·동일 사실 테스트로 확인합니다. 서사 검토는 docs/narrative-quality-review.md에 기록합니다.
 
 knowledge/의 원본 JSON·Markdown·example은 내용 변경 없이 보존합니다. 사용자 승인 장르 변경은 genre_structure_override.json과 knowledge-provider.ts에서 적용합니다.
+
+판타지는 호환성을 위해 기존 내부 ID `fantasy_academy`를 유지합니다.
 
 독립 장르: romance_fantasy / zombie_apocalypse / idol_entertainment / mystery / fantasy_academy.
 

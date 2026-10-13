@@ -1,11 +1,23 @@
 {
   "rulesVersion": "1.2",
-  "description": "사용자 승인 변경: 다섯 장르를 같은 위계로 사용한다. 원본 v1.2의 학습 사실과 서사 규칙은 변경하지 않는다.",
+  "description": "사용자 승인 변경: 다섯 장르를 같은 위계로 사용한다. 원본 v1.2의 학습 사실과 서사 규칙은 변경하지 않는다. fantasy_academy는 호환용 내부 ID이며 현재 표시·생성 장르는 폭넓은 판타지이다.",
   "genres": {
-    "romance_fantasy": { "sourcePath": "romance_fantasy" },
-    "zombie_apocalypse": { "sourcePath": "zombie_apocalypse" },
-    "idol_entertainment": { "sourcePath": "modern_web_fiction.subgenres.idol", "sharedPath": "modern_web_fiction.core_fun" },
-    "mystery": { "sourcePath": "modern_web_fiction.subgenres.mystery", "sharedPath": "modern_web_fiction.core_fun" },
-    "fantasy_academy": { "sourcePath": "fantasy_academy" }
+    "romance_fantasy": {
+      "sourcePath": "romance_fantasy"
+    },
+    "zombie_apocalypse": {
+      "sourcePath": "zombie_apocalypse"
+    },
+    "idol_entertainment": {
+      "sourcePath": "modern_web_fiction.subgenres.idol",
+      "sharedPath": "modern_web_fiction.core_fun"
+    },
+    "mystery": {
+      "sourcePath": "modern_web_fiction.subgenres.mystery",
+      "sharedPath": "modern_web_fiction.core_fun"
+    },
+    "fantasy_academy": {
+      "sourcePath": "fantasy_academy"
+    }
   }
 }
