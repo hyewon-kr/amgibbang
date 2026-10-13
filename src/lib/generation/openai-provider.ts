@@ -92,7 +92,11 @@ ${setup.genre === "mystery" ? `최신 추리 전용 우선 지시: 본문은 범
     for (const c of story.chapters) for (const m of c.mappings) if (c.story.split(/\n\s*\n/).filter((p) => p.includes(m.storyExcerpt)).length !== 1) throw new GenerationError("주석 위치를 확인하지 못했어요. 다시 생성해주세요.");
     return story;
     } catch (error) {
-      feedback = `Previous output failed validation: ${error instanceof Error ? error.message : "invalid output"}. Rebuild valid chapter and mapping references and exact excerpts. Previous output: ${JSON.stringify(response.output_parsed)}`;
+      const previous = response.output_parsed;
+      const missingFactNumbers = analysis.internal.factAnchors.map((_, index) => index + 1).filter((number) => !previous.chapters.some((chapter) => chapter.paragraphs.some((paragraph) => paragraph.annotation?.factNumbers.includes(number))));
+      const missingStepNumbers = analysis.internal.steps.map((_, index) => index + 1).filter((number) => !previous.chapters.some((chapter) => chapter.stepNumbers.includes(number)));
+      const unannotatedChapters = previous.chapters.flatMap((chapter, index) => chapter.paragraphs.some((paragraph) => paragraph.annotation) ? [] : [index + 1]);
+      feedback = `Previous output failed validation: ${error instanceof Error ? error.message : "invalid output"}. Fix these exact 1-based references: missing factNumbers=${JSON.stringify(missingFactNumbers)}, missing stepNumbers=${JSON.stringify(missingStepNumbers)}, chapters without any annotated passage=${JSON.stringify(unannotatedChapters)}. Preserve the plot and facts; attach every missing fact to a genuinely relevant passage. Do not drop or invent facts. Previous output: ${JSON.stringify(previous)}`;
       // Paths/codes identify the failed constraint without logging story text.
       const code = error instanceof ZodError
         ? error.issues.map((issue) => `${issue.path.join(".")}:${issue.code}`).join(",").slice(0, 500)

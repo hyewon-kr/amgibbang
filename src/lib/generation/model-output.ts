@@ -40,8 +40,12 @@ export function assembleNarrative(narrative: ModelNarrative, analysis: AnalysisP
       factAnchorIds: [...new Set(p.annotation!.factNumbers.map((n) => analysis.internal.factAnchors[n - 1].id))],
       explanation: p.annotation!.explanation, metaphorLimit: p.annotation!.metaphorLimit,
     }));
+    const linkedFacts = new Set(mappings.flatMap((mapping) => mapping.factAnchorIds));
+    // The confirmed fact-to-step links are authoritative even if a redundant
+    // model stepNumbers tag was omitted. This never creates an annotation.
+    const linkedSteps = analysis.internal.steps.filter((step) => step.factAnchorIds.some((id) => linkedFacts.has(id))).map((step) => step.id);
     return { id: index + 1, title: chapter.title, story: paragraphs.map((p) => p.text).join("\n\n"),
-      stepIds: [...new Set(chapter.stepNumbers.map((n) => analysis.internal.steps[n - 1].id))],
+      stepIds: [...new Set([...chapter.stepNumbers.map((n) => analysis.internal.steps[n - 1].id), ...linkedSteps])],
       factAnchorIds: [...new Set(mappings.flatMap((m) => m.factAnchorIds))], mappings };
   });
   return { title: narrative.title, drivingQuestion: narrative.drivingQuestion,

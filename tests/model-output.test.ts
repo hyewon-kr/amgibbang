@@ -34,3 +34,18 @@ test("paragraph annotations assemble exact excerpts and preserve all five reader
     for (const chapter of assembled.chapters) for (const mapping of chapter.mappings) assert.ok(chapter.story.split("\n\n").includes(mapping.storyExcerpt));
   }
 });
+
+test("confirmed annotations retain source step links when redundant model tags omit a step", () => {
+  const story = mockStories.romance_fantasy;
+  const model = narrativeModelSchema(mockAnalysis).parse({
+    title: story.title, drivingQuestion: story.drivingQuestion,
+    narrativePlan: { protagonistDesire: story.narrativePlan.protagonistDesire, motivation: story.narrativePlan.motivation, relationshipArc: story.narrativePlan.relationshipArc, payoff: story.narrativePlan.payoff },
+    chapters: [{ title: "Complete facts", conflict: "", resolution: "", stepNumbers: [1], paragraphs: mockAnalysis.internal.factAnchors.map((fact, index) => ({ text: fact.text, annotation: { factNumbers: [index + 1], explanation: "Source-linked passage", metaphorLimit: null } })) }],
+  });
+  const assembled = assembleNarrative(model, mockAnalysis);
+  assert.deepEqual(assembled.chapters[0].stepIds, mockAnalysis.internal.steps.map((step) => step.id));
+  assert.equal(assembled.chapters[0].mappings.length, mockAnalysis.internal.factAnchors.length);
+  // Missing annotations must still fail coverage, rather than be fabricated.
+  model.chapters[0].paragraphs.forEach((paragraph) => { paragraph.annotation = null; });
+  assert.throws(() => validateStory({ ...story, ...assembleNarrative(model, mockAnalysis) }));
+});
