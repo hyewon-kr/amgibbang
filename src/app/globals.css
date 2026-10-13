@@ -102,7 +102,7 @@ textarea::placeholder { color:#8d9182; }
 .chapter-label { font-size:10px; font-weight:500; letter-spacing:2.6px; color:var(--green); }
 .novel-chapter h2 { font-family:var(--serif); font-size:28px; font-weight:600; line-height:1.75; letter-spacing:-1px; margin-top:15px; word-break:keep-all; scroll-margin-top:35px; }
 .passage-row { display:grid; grid-template-columns:minmax(0,680px) minmax(0,260px); gap:40px; align-items:start; }
-.passage-row + .passage-row { margin-top:26px; }
+.passage-row + .passage-row { margin-top:8px; }
 .novel-passage { font-family:var(--serif); font-size:18px; line-height:2.2; letter-spacing:-.25px; white-space:pre-line; word-break:keep-all; overflow-wrap:break-word; }
 .novel-passage.dialogue { color:#384a32; font-weight:500; }
 .annotation-trigger { vertical-align:baseline; margin-left:6px; padding:0 10px; height:44px; min-width:44px; border:0; background:transparent; color:var(--orange); font-family:var(--serif); font-size:24px; font-weight:600; line-height:1; border-radius:50%; }
