@@ -51,3 +51,16 @@ test("mystery reveals the result first and reconstructs the complete process at 
   assert.deepEqual(story.chapters.at(-1)!.stepIds, steps.map((step) => step.id));
   assert.deepEqual(story.flowSummary.map((item) => item.factAnchorIds), steps.map((step) => step.factAnchorIds));
 });
+
+test("crime mystery uses a recurring investigative cast and independent case evidence", () => {
+  const story = validateStory(mockStories.mystery);
+  const text = story.chapters.map((chapter) => chapter.story).join("\n");
+  assert.match(text, /기금.*사라졌다/);
+  assert.equal(story.narrativePlan.relationshipArc.length, 3);
+  for (const character of story.narrativePlan.relationshipArc) {
+    assert.ok(story.chapters.filter((chapter) => chapter.story.includes(character.character.split(" ")[0])).length >= 2);
+  }
+  assert.match(text, /이체 기록/);
+  assert.match(text, /출입 영상/);
+  assert.ok(story.chapters.flatMap((chapter) => chapter.mappings).every((mapping) => mapping.metaphorLimit?.includes("입증하지 않습니다")));
+});
