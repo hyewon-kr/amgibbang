@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { ZodError } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
 import { ModelAnalysisSchema, assembleAnalysis, narrativeModelSchema, assembleNarrative } from "./model-output";
 import type { LearningProvider } from "./provider";
@@ -92,7 +93,12 @@ ${setup.genre === "mystery" ? `최신 추리 전용 우선 지시: 본문은 범
     return story;
     } catch (error) {
       feedback = `Previous output failed validation: ${error instanceof Error ? error.message : "invalid output"}. Rebuild valid chapter and mapping references and exact excerpts. Previous output: ${JSON.stringify(response.output_parsed)}`;
-      diagnostic({ category: "zod_validation", attempt, status: 502 });
+      // Paths/codes identify the failed constraint without logging story text.
+      const code = error instanceof ZodError
+        ? error.issues.map((issue) => `${issue.path.join(".")}:${issue.code}`).join(",").slice(0, 500)
+        : error instanceof Error && ["uncovered fact", "mapping excerpt absent from story", "flow chapters: unknown reference", "chapter steps: unknown reference", "mapping facts: unknown reference"].includes(error.message)
+          ? error.message : "story_mapping_validation";
+      diagnostic({ category: "zod_validation", attempt, status: 502, code });
       if (attempt === 1) throw new GenerationError("이야기의 개념 연결을 검증하지 못했어요. 다시 생성해주세요.", "zod_validation");
     }
     }
