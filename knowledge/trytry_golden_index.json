@@ -1,0 +1,132 @@
+{
+  "version": "2026-10-13",
+  "sourceFile": "trytry_golden_examples.txt",
+  "editorialNote": "아래 summary/principle/limits는 구현용 편집 요약이다. excerpts만 첨부의 확인된 원문 발췌 또는 선호 장면에서 그대로 인용한다. 모든 항목은 전체 원문 복제본이 아니다.",
+  "examples": [
+    {
+      "id": "raas-romance",
+      "genre": "romance_fantasy",
+      "title": "메마른 제국의 마지막 명령",
+      "status": "accepted",
+      "sourceKind": "excerpt_and_outline",
+      "fullOriginalAvailable": false,
+      "topics": [
+        "RAAS",
+        "레닌",
+        "안지오텐신",
+        "알도스테론"
+      ],
+      "summary": "신장 영지의 위기에 레닌이 반응을 시작하고 ACE를 거쳐 재상 안지오텐신 II가 작동한다. 수로 수축과 소금·물 보존이 회복에 기여하며 재상의 위기 대응과 물러남이 절제된 관계의 여운과 맞물린다.",
+      "excerpts": [
+        "“그렇다면 오늘은 조금만 더 곁에 있어 줘.”"
+      ],
+      "principle": "기능을 인물의 행동으로 만들고 기전과 관계를 연결한다. 설정이나 대사를 복제하지 않는다.",
+      "limits": "수로는 문자 그대로의 혈압 모형이 아니다. 혈관수축과 알도스테론 경로는 병렬적 기여이다."
+    },
+    {
+      "id": "immunity-zombie",
+      "genre": "zombie_apocalypse",
+      "title": "마지막 방어선",
+      "status": "accepted",
+      "sourceKind": "excerpt_and_outline",
+      "fullOriginalAvailable": false,
+      "topics": [
+        "면역",
+        "항원",
+        "T세포",
+        "B세포"
+      ],
+      "summary": "면역세포들이 실제 기능으로 좀비 위협에 대응한다. 수지상세포의 항원 제시를 자신의 수용체로 인식하는 보조 T세포의 발견이 행동을 바꾼다. 기억 세포는 재노출 대응에 기여한다.",
+      "excerpts": [
+        "“이 항원…… 내 수용체가 인식할 수 있어.”"
+      ],
+      "principle": "특이적 인식이 극적 발견이 된다. 선천·적응 반응을 완전히 분리된 단계로 만들지 않는다.",
+      "limits": "좀비≠병원체. T세포는 제시된 peptide–MHC를 인식하며 공동자극 등이 중요하다. 기억이 완전 차단을 보장하지 않는다."
+    },
+    {
+      "id": "ecg-idol",
+      "genre": "idol_entertainment",
+      "title": "마지막 앙코르",
+      "status": "accepted",
+      "sourceKind": "plot_summary",
+      "fullOriginalAvailable": false,
+      "topics": [
+        "ECG",
+        "심전도",
+        "P파",
+        "QRS",
+        "T파",
+        "전기전도"
+      ],
+      "summary": "SA node·AV node·히스다발·다발가지·푸르키네섬유의 실제 신호 기능이 공연팀의 업무와 무대 신호로 나타난다. P/QRS/T 의미를 짧게 밝히고 전달 지연/누락이 공연의 선택을 바꾼다.",
+      "excerpts": [],
+      "principle": "개념→직무→신호 전달→실제 무대 결과. 공연 사고는 이 예시의 플롯이지 장르 기본 공식이 아니다.",
+      "limits": "ECG는 전기활동이다. QRS 연장이 우심실 정지를 뜻하지 않는다. P 뒤 QRS 누락만으로 모든 AV block 유형을 단정하지 않는다."
+    },
+    {
+      "id": "protein-idol",
+      "genre": "idol_entertainment",
+      "title": "이번 컴백, 원본 유출 금지",
+      "status": "accepted",
+      "sourceKind": "plot_and_dialogue_summary",
+      "fullOriginalAvailable": false,
+      "topics": [
+        "DNA",
+        "RNA",
+        "단백질",
+        "전사",
+        "번역",
+        "코돈"
+      ],
+      "summary": "DNA 원본에서 RNA 중합효소가 복사본을 만들고 가공된 mRNA가 제작실로 이동한다. 리보솜·tRNA의 기능이 컴백 제작의 협업을 만들고 발매와 팬 반응으로 이어진다. 큰 사고 없이도 업무 대화가 재미를 만든다.",
+      "excerpts": [],
+      "principle": "학습 기능을 제작진의 직무와 협업으로 바꾼다. 첨부 대표 대사는 요약으로 분류하며 확인된 원문 인용으로 승격하지 않는다.",
+      "limits": "전사 수행자는 RNA 중합효소이며 DNA가 아니다. 번역과 접힘이 반드시 완전히 시간 분리되는 것은 아니다."
+    },
+    {
+      "id": "inhibition-mystery",
+      "genre": "mystery",
+      "title": "활성 부위의 살인",
+      "status": "accepted",
+      "sourceKind": "excerpt_and_plot_summary",
+      "fullOriginalAvailable": false,
+      "topics": [
+        "효소",
+        "기질",
+        "저해",
+        "Vmax",
+        "Km"
+      ],
+      "summary": "효소 경·기질 양·경쟁적/순수 비경쟁적 저해제가 인물이다. 기질 농도를 늘린 실험의 반응 패턴과 결합 흔적이 서로 다른 저해 방식을 구별해 사건을 해결한다.",
+      "excerpts": [
+        "“그는 왕립 반응 연구회의 가장 뛰어난 촉매 전문가였다. 수많은 반응을 빠르게 진행시키면서도 자신은 소모되지 않는 것으로 유명했다.”",
+        "기질 농도 증가 — 저해 효과 감소."
+      ],
+      "principle": "단서→개념 적용→모순→증거 기반 추론. 모든 저해를 같은 범행으로 묶지 않는다.",
+      "limits": "살인은 활성 저하의 의인화 비유이다. 가역 저해≠영구 파괴/실제 죽음. 순수 비경쟁적 유형은 Vmax↓·Km 불변이며 혼합 저해와 구별한다."
+    },
+    {
+      "id": "respiration-academy",
+      "genre": "fantasy_academy",
+      "title": "달빛 아래 사라진 마력",
+      "status": "candidate",
+      "sourceKind": "preferred_excerpt_and_outline",
+      "fullOriginalAvailable": false,
+      "topics": [
+        "포도당",
+        "피루브산",
+        "ATP",
+        "세포호흡",
+        "해당과정"
+      ],
+      "summary": "포도당·ATP가 학생으로 움직이고 포도당이 피루브산 두 인물로 변한다. 전자 운반·H⁺ 기울기·ATP 합성·산소의 최종 수용 기능이 마법 세계의 작용이다. 기숙사→숲→용→귀환을 의무 공식으로 삼지 않는다.",
+      "excerpts": [
+        "“너 누구야?”",
+        "“내가 묻고 싶거든?”",
+        "“피루브산 두 분, 통과하시면 됩니다.”"
+      ],
+      "principle": "개념 자체가 살아 움직이는 재미와 정확한 변화·수량을 함께 살린다. 긍정 피드백 후보이며 최종 채택이 아니다.",
+      "limits": "해당과정 ATP 투입2·생성4·순2, 포도당1→피루브산2. 실제 구획과 물질 수지를 주석에 명시한다."
+    }
+  ]
+}

@@ -8,7 +8,7 @@ import { validateStory } from "../src/lib/generation/validate-story";
 
 test("required order is assembled from actual steps, without copying IDs from the model", () => {
   const internal = { factAnchors: mockAnalysis.internal.factAnchors, causalRelations: mockAnalysis.internal.causalRelations, steps: mockAnalysis.internal.steps.map((step) => ({ ...step, requiredInOrder: true })) };
-  const model = ModelAnalysisSchema.parse({ userFacing: mockAnalysis.userFacing, internal });
+  const model = ModelAnalysisSchema.parse({ recommendedGenre: null, recommendationReason: null, userFacing: mockAnalysis.userFacing, internal });
   assert.deepEqual(validateAnalysis(assembleAnalysis(model)), mockAnalysis);
   assert.ok(!("requiredInOrder" in assembleAnalysis(model).internal.steps[0]));
 });

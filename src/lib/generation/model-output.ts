@@ -1,9 +1,12 @@
 import { z } from "zod";
 import { AnalysisSchema, type AnalysisPayload } from "../schemas/analysis";
-import { StepSchema, StoryPayloadSchema } from "../schemas/story";
+import { StepSchema, StoryGenreSchema, StoryPayloadSchema } from "../schemas/story";
 
 // Generation-only contracts. The public API and reader payload stay unchanged.
 export const ModelAnalysisSchema = AnalysisSchema.extend({
+  // Strict Responses schema requires both keys; null means no suggestion.
+  recommendedGenre: StoryGenreSchema.nullable(),
+  recommendationReason: z.string().max(60).nullable(),
   internal: AnalysisSchema.shape.internal.omit({ requiredOrder: true }).extend({
     steps: z.array(StepSchema.extend({ requiredInOrder: z.boolean() })).min(1),
   }),
@@ -11,7 +14,8 @@ export const ModelAnalysisSchema = AnalysisSchema.extend({
 export function assembleAnalysis(input: z.infer<typeof ModelAnalysisSchema>): AnalysisPayload {
   const steps = input.internal.steps.map(({ id, order, label, description, factAnchorIds }) => ({ id, order, label, description, factAnchorIds }));
   const requiredOrder = [...input.internal.steps].sort((a, b) => a.order - b.order).filter((step) => step.requiredInOrder).map((step) => step.id);
-  return { userFacing: input.userFacing, internal: { ...input.internal, steps, requiredOrder: requiredOrder.length ? requiredOrder : [steps[0].id] } };
+  return { recommendedGenre: input.recommendedGenre ?? undefined, recommendationReason: input.recommendationReason ?? undefined,
+    userFacing: input.userFacing, internal: { ...input.internal, steps, requiredOrder: requiredOrder.length ? requiredOrder : [steps[0].id] } };
 }
 export function narrativeModelSchema(analysis: AnalysisPayload) {
   const factNumber = z.number().int().min(1).max(analysis.internal.factAnchors.length);

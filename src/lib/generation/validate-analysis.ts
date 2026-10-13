@@ -2,6 +2,10 @@ import { AnalysisSchema, type AnalysisPayload } from "../schemas/analysis";
 
 export function validateAnalysis(input: unknown): AnalysisPayload {
   const analysis = AnalysisSchema.parse(input);
+  if (!analysis.recommendedGenre || !analysis.recommendationReason) {
+    delete analysis.recommendedGenre;
+    delete analysis.recommendationReason;
+  }
   const internal = analysis.internal;
   const steps = new Set(internal.steps.map((step) => step.id));
   const facts = new Set(internal.factAnchors.map((fact) => fact.id));

@@ -1,4 +1,4 @@
-import type { AnalysisPayload } from "@/lib/schemas/analysis";
+import { genreRecommendation, type AnalysisPayload } from "@/lib/schemas/analysis";
 import type { StoryGenre, StoryPayload } from "@/lib/schemas/story";
 
 export type FlowState = {
@@ -31,7 +31,7 @@ export type FlowAction =
 export function flowReducer(state: FlowState, action: FlowAction): FlowState {
   switch (action.type) {
     case "INPUT": return { ...state, originalContent: action.value, analysis: null, story: null, openAnnotations: [] };
-    case "ANALYZED": return { ...state, analysis: action.analysis, story: null, openAnnotations: [] };
+    case "ANALYZED": return { ...state, analysis: action.analysis, genre: state.genre ?? genreRecommendation(action.analysis)?.genre ?? null, story: null, openAnnotations: [] };
     case "REQUEST": return { ...state, [action.field]: action.value, story: null, openAnnotations: [] };
     case "GENRE": return { ...state, genre: action.genre, story: null, openAnnotations: [] };
     case "STORY": return state.analysis && state.genre === action.story.genre ? { ...state, story: action.story, screen: "reader", openAnnotations: [] } : state;

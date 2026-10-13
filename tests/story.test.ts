@@ -20,11 +20,11 @@ test("all facts, mappings, chapter references, and flow links are valid", () => 
   assert.throws(() => validateStory(invalidMapping), /unknown reference/);
 });
 
-test("five peer genres are consistently derived from preserved rules", async () => {
+test("five peer genres share the current normalized rules", async () => {
   const knowledge = await loadKnowledge();
   assert.deepEqual(Object.keys(knowledge.rules.genres).sort(), genres.map((g) => g.id).sort());
   assert.ok(knowledge.rules.genres.idol_entertainment.driving_question);
-  assert.equal(knowledge.rules.genres.idol_entertainment.engine, undefined);
+  assert.equal("engine" in knowledge.rules.genres.idol_entertainment, false);
   assert.equal("subgenre" in mockStory, false);
   assert.equal("modern_web_fiction" in knowledge.rules.genres, false);
 });
@@ -81,11 +81,11 @@ test("every mapping attaches to a real paragraph; at most one trigger per passag
 });
 
 // Old IDs/session payloads must continue to resolve to the new displayed genre.
-test("Fantasy retains its compatible ID and adventure rules without exam defaults", async () => {
+test("Fantasy Academy retains its ID and supports adventure without exam defaults", async () => {
   const knowledge = await loadKnowledge();
   const fantasy = genres.find((genre) => genre.id === "fantasy_academy")!;
-  assert.equal(fantasy.name, "판타지");
-  assert.equal(knowledge.rules.genres.fantasy_academy.display_name, "판타지");
+  assert.equal(fantasy.name, "판타지 아카데미");
+  assert.equal(knowledge.rules.genres.fantasy_academy.display_name, "판타지 아카데미");
   assert.ok(knowledge.rules.genres.fantasy_academy.core_fun.includes("모험"));
   const story = validateStory(mockStories.fantasy_academy);
   assert.equal(story.genre, fantasy.id);

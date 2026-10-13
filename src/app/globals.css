@@ -192,3 +192,7 @@ textarea::placeholder { color:#8d9182; }
 }
 @media(max-width:400px) { .eyebrow { font-size:8px; letter-spacing:1.2px; } .compact-genre { gap:6px; } .genre-copy strong { font-size:12px; } .genre-copy > span { font-size:9px; } .compact-status { font-size:7px; } .input-meta { font-size:9px; } .input-bottom { flex-wrap:wrap; } .input-bottom .primary-button { flex:1; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation:none!important; transition:none!important; } }
+
+.genre-recommendation { margin:12px 0 16px; color:var(--muted); font-size:12px; line-height:1.8; }
+.genre-recommendation p { margin:0; }
+.genre-recommendation strong { color:var(--ink); font-weight:500; }

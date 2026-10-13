@@ -10,6 +10,7 @@ import { StoryReader } from "@/components/story/StoryReader";
 import { apiProvider } from "@/lib/generation/api-provider";
 import { validateStory } from "@/lib/generation/validate-story";
 import { validateAnalysis } from "@/lib/generation/validate-analysis";
+import { genreRecommendation } from "@/lib/schemas/analysis";
 import { flowReducer, initialState } from "./reducer";
 import { readSession, sessionKey } from "./session";
 
@@ -96,7 +97,7 @@ export function LearningFlow() {
         {error && <div className="global-error" role="alert">{error}<button className="text-button" onClick={() => setError("")}>닫기</button></div>}
         {busy && <p className="prototype-note" role="status" aria-live="polite">{busy === "analysis" ? "학습 내용을 분석하고 있어요." : "선택한 장르로 이야기를 만들고 있어요."} {elapsed}초 경과{elapsed >= 45 ? " · 요청이 진행 중입니다. 다시 누르지 않아도 돼요." : ""}</p>}
         {state.screen === "setup" && <div className="story-setup"><LearningInput value={state.originalContent} onChange={(value) => { setError(""); dispatch({ type: "INPUT", value }); }} onAnalyze={analyze} busy={busy !== null} analyzing={busy === "analysis"} analyzed={!!state.analysis} />
-          {state.analysis && <div className="setup-expansion"><AnalysisSummary analysis={state.analysis} /><AdditionalRequests userPriority={state.userPriority} comprehensionNeeds={state.comprehensionNeeds} onChange={(field, value) => dispatch({ type: "REQUEST", field, value })} disabled={busy !== null} /><GenreSelector selected={state.genre} onSelect={(genre) => dispatch({ type: "GENRE", genre })} disabled={busy !== null} /><GenerateStoryCTA selected={!!state.genre} busy={busy === "story"} pending={busy !== null} onGenerate={generate} /></div>}
+          {state.analysis && <div className="setup-expansion"><AnalysisSummary analysis={state.analysis} /><AdditionalRequests userPriority={state.userPriority} comprehensionNeeds={state.comprehensionNeeds} onChange={(field, value) => dispatch({ type: "REQUEST", field, value })} disabled={busy !== null} /><GenreSelector recommendation={genreRecommendation(state.analysis)} selected={state.genre} onSelect={(genre) => dispatch({ type: "GENRE", genre })} disabled={busy !== null} /><GenerateStoryCTA selected={!!state.genre} busy={busy === "story"} pending={busy !== null} onGenerate={generate} /></div>}
         </div>}
         {state.screen === "reader" && state.story && <StoryReader story={state.story} originalContent={state.originalContent} hasRequests={!!(state.userPriority.trim() || state.comprehensionNeeds.trim())} openAnnotations={state.openAnnotations} onToggle={(id) => dispatch({ type: "ANNOTATION", id })} onSetup={backToSetup} onRestart={reset} />}
       </>}

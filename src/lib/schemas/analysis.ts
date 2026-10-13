@@ -1,7 +1,13 @@
 import { z } from "zod";
-import { FactAnchorSchema, StepSchema, type StoryGenre } from "./story";
+import { FactAnchorSchema, StepSchema, StoryGenreSchema, type StoryGenre } from "./story";
+
+const RecommendationReasonSchema = z.string().trim().min(1).max(60).regex(/^[^.!?。\n\r]+[.!?。]?$/);
 
 export const AnalysisSchema = z.object({
+  // Recommendation metadata is optional: old cached analyses remain usable,
+  // and malformed suggestions must never invalidate otherwise valid facts.
+  recommendedGenre: StoryGenreSchema.optional().catch(undefined),
+  recommendationReason: RecommendationReasonSchema.optional().catch(undefined),
   userFacing: z.object({
     summary: z.string().min(1),
     coreConcept: z.string().min(1),
@@ -20,6 +26,10 @@ export const AnalysisSchema = z.object({
   }).strict(),
 }).strict();
 export type AnalysisPayload = z.infer<typeof AnalysisSchema>;
+export function genreRecommendation(analysis: AnalysisPayload | null) {
+  return analysis?.recommendedGenre && analysis.recommendationReason
+    ? { genre: analysis.recommendedGenre, reason: analysis.recommendationReason } : null;
+}
 export type StorySetup = {
   originalContent: string;
   analysis: AnalysisPayload;
