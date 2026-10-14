@@ -25,7 +25,8 @@ test("analysis returns a single recommendation in its existing one OpenAI reques
     calls++;
     const request = JSON.parse(String(init?.body));
     if (request.text.format.name === "learning_story") {
-      const { references } = await loadKnowledge();
+      const { references, rules } = await loadKnowledge();
+      assert.ok(request.instructions.includes(rules.character_system.naming_priority));
       for (const reference of references.examples.filter((r) => r.genre === "idol_entertainment")) assert.ok(request.instructions.includes(reference.originalText));
       const input = JSON.parse(request.input);
       assert.equal(input.genre, "idol_entertainment");

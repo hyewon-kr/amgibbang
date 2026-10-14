@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { createHash } from "node:crypto";
 import { ZodError } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
 import { ModelAnalysisSchema, assembleAnalysis, narrativeModelSchema, assembleNarrative } from "./model-output";
@@ -39,7 +40,7 @@ export const openaiProvider: LearningProvider = {
     const analysis = validateAnalysis(setup.analysis);
     const NarrativeSchema = narrativeModelSchema(analysis);
     const instructions = await storyInstructions(setup);
-    diagnostic({ category: "story_context", model: generationModel(), code: "golden-full-originals", promptCharacters: instructions.length });
+    diagnostic({ category: "story_context", model: generationModel(), reasoning: generationEffort(), code: "golden-full-originals", promptCharacters: instructions.length, instructionsSha256: createHash("sha256").update(instructions).digest("hex") });
     let feedback = "";
     const deadline = Date.now() + 265000;
     for (let attempt = 0; attempt < 2; attempt++) {
