@@ -10,3 +10,6 @@ playwright-report/
 .firebase/
 firebase-debug*.log
 service-account*.json
+
+# Local conformance reports may include study inputs and generated prose.
+/artifacts/conformance/
